@@ -1,6 +1,6 @@
 # Vuesax Time Tracking
 
-Single-Page Application for logging and reporting daily tasks.
+> Single-Page Application for logging and reporting daily tasks.
 
 ## Features
 
@@ -17,12 +17,11 @@ Single-Page Application for logging and reporting daily tasks.
 
 ## Backend API
 
-- See details in [api-time-tracking](https://github.com/ccalvarez/api-time-tracking) repo
+- See details in the [api-time-tracking](https://github.com/ccalvarez/api-time-tracking) repo.
 
 ## Important
 
 This application uses environment variables as explained in the Vue CLI 3 [official guide](https://cli.vuejs.org/guide/mode-and-env.html).
-
 To run the application, rename `.env` file to `.env.local` and edit it to set proper values for the environment variables.
 
 ## Project setup
@@ -52,3 +51,7 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+## License
+[MIT](https://github.com/ccalvarez/vuesax-time-tracking/blob/master/LICENSE)
+
