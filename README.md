@@ -19,6 +19,10 @@ Single-Page Application for logging and reporting daily tasks.
 
 - See details in [api-time-tracking](https://github.com/ccalvarez/api-time-tracking) repo
 
+## Important
+
+This application uses environment variables as explained in the Vue CLI 3 [official guide](https://cli.vuejs.org/guide/mode-and-env.html#modes).  So in order to run the application, rename `.env` file to `.env.local` and edit it to set proper values for the environment variables.
+
 ## Project setup
 ```
 npm install
@@ -46,3 +50,7 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+## Important
+
+This application uses environment variables as explained in the Vue CLI 3 [official guide](https://cli.vuejs.org/guide/mode-and-env.html#modes).  So in order to run the application, rename `.env` file to `.env.local` and edit it to set proper values for the environment variables.
