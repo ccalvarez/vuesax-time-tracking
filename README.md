@@ -15,6 +15,10 @@ Single-Page Application for logging and reporting daily tasks.
 
 - [netlify](https://www.netlify.com/)
 
+## Backend API
+
+- See details in [api-time-tracking](https://github.com/ccalvarez/api-time-tracking) repo
+
 ## Project setup
 ```
 npm install
