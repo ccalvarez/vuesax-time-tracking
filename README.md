@@ -6,8 +6,8 @@ Single-Page Application for logging and reporting daily tasks.
 
 - [Vue.js](https://vuejs.org/)
 - [Vue CLI 3](https://cli.vuejs.org/)
-- [Vue Router](https://router.vuejs.org/)
 - [Vuex](https://vuex.vuejs.org/)
+- [Vue Router](https://router.vuejs.org/)
 - [Vuesax Frontend Vue Components](https://lusaxweb.github.io/vuesax/)
 - [JSON Web Tokens](https://jwt.io/)
 
