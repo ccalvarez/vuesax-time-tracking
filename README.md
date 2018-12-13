@@ -21,7 +21,7 @@ Single-Page Application for logging and reporting daily tasks.
 
 ## Important
 
-This application uses environment variables as explained in the Vue CLI 3 [official guide](https://cli.vuejs.org/guide/mode-and-env.html#modes).  So in order to run the application, rename `.env` file to `.env.local` and edit it to set proper values for the environment variables.
+This application uses environment variables as explained in the Vue CLI 3 [official guide](https://cli.vuejs.org/guide/mode-and-env.html).  So in order to run the application, rename `.env` file to `.env.local` and edit it to set proper values for the environment variables.
 
 ## Project setup
 ```
