@@ -1,4 +1,4 @@
-# Vuesax Time Tracking Application
+# Vuesax Time Tracking
 
 Single-Page Application for logging and reporting daily tasks.
 
