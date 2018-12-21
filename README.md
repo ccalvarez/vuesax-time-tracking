@@ -13,7 +13,7 @@
 
 ## Hosting
 
-- [netlify](https://www.netlify.com/)
+- [Netlify](https://www.netlify.com/)
 
 ## Backend API
 
@@ -22,7 +22,7 @@
 ## Important
 
 This application uses environment variables as explained in the Vue CLI 3 [official guide](https://cli.vuejs.org/guide/mode-and-env.html).
-To run the application, copy the `.env` file to `.env.local` and edit the latter to set appropriate values for the environment variables.
+To run the application, copy the `.env` file as `.env.local` and edit the latter to set appropriate values for the environment variables.
 
 ## Project setup
 ```
