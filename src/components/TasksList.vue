@@ -2,7 +2,7 @@
   <vs-list>
     <vs-list-header :icon="group.icon" :title="group.title" :color="group.color"></vs-list-header>
     <vs-list-item v-for="(task) in tasks" :key="task._id" :title="task.description" :subtitle="task.project.name">
-      <vs-button v-if="state=='running'" color="warning" @click="pauseTask(task._id)">Pausar</vs-button>
+      <vs-button v-if="state=='running'" color="warning" size="large" @click="pauseTask(task._id)">Pausar</vs-button>
     </vs-list-item>
   </vs-list>
 </template>
@@ -46,6 +46,6 @@ export default {
 <style scoped>
 .vs-list--item {
   padding: 4px;
-  padding-left: 32px;
+  padding-left: 25px;
 }
 </style>
