@@ -25,9 +25,6 @@ export default {
       'pendingTasks',
     ]),
   },
-  mounted() {
-    console.log(this.runningTasks);
-  },
 };
 </script>
 

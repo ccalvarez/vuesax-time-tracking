@@ -15,7 +15,6 @@ new Vue({
   store,
   render: h => h(App),
   beforeCreate() {
-    console.log('beforeCreate');
     this.$store
       .dispatch('getTasks')
       .then()
