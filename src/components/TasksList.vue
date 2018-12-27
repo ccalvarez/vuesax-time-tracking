@@ -2,7 +2,7 @@
   <vs-list>
     <vs-list-header :icon="group.icon" :title="group.title" :color="group.color"></vs-list-header>
     <vs-list-item v-for="(task) in tasks" :key="task._id" :title="task.description" :subtitle="task.project.name">
-      <vs-button v-if="state=='running'" color="warning" size="large" @click="pauseTask(task._id)">Pausar</vs-button>
+      <vs-button v-if="state=='running'" color="warning" size="large" @click="pauseTask(task._id, $event)">Pausar</vs-button>
     </vs-list-item>
   </vs-list>
 </template>
@@ -34,11 +34,17 @@ export default {
     },
   },
   methods: {
-    pauseTask: function(taskId) {
+    pauseTask: function(taskId, event) {
+      event.target.parentElement.disabled = true;
+
       this.$store
         .dispatch('pauseTask', taskId)
-        .then()
-        .catch(); // TODO: esperar y actuar según el resultado de la Promise
+        .then(result => {
+          event.target.parentElement.disabled = false;
+        })
+        .catch(error => {
+          event.target.parentElement.disabled = false;
+        }); // TODO: esperar y actuar según el resultado de la Promise
     },
   },
 };
