@@ -1,7 +1,9 @@
 <template>
   <vs-list>
     <vs-list-header :icon="group.icon" :title="group.title" :color="group.color"></vs-list-header>
-    <vs-list-item v-for="(task) in tasks" :key="task._id" :title="task.description" :subtitle="task.project.name"></vs-list-item>
+    <vs-list-item v-for="(task) in tasks" :key="task._id" :title="task.description" :subtitle="task.project.name">
+      <vs-button v-if="state=='running'" color="warning" @click="pauseTask(task._id)">Pausar</vs-button>
+    </vs-list-item>
   </vs-list>
 </template>
 <script>
@@ -29,6 +31,14 @@ export default {
               ? 'timer_off'
               : this.state == 'finished' ? 'done' : 'list',
       };
+    },
+  },
+  methods: {
+    pauseTask: function(taskId) {
+      this.$store
+        .dispatch('pauseTask', taskId)
+        .then()
+        .catch(); // TODO: esperar y actuar según el resultado de la Promise
     },
   },
 };
