@@ -6,16 +6,76 @@ const state = {
 
 const getters = {
   runningTasks: state => {
-    return state.tasks.filter(task => task.state == 'running');
+    return state.tasks
+      .filter(task => task.state == 'running')
+      .sort((a, b) => {
+        return (
+          Math.min(
+            ...a.intervals.map(interval => {
+              return new Date(interval.start);
+            })
+          ) -
+          Math.min(
+            ...b.intervals.map(interval => {
+              return new Date(interval.start);
+            })
+          )
+        );
+      });
   },
   pausedTasks: state => {
-    return state.tasks.filter(task => task.state == 'paused');
+    return state.tasks
+      .filter(task => task.state == 'paused')
+      .sort((a, b) => {
+        return (
+          Math.min(
+            ...a.intervals.map(interval => {
+              return new Date(interval.start);
+            })
+          ) -
+          Math.min(
+            ...b.intervals.map(interval => {
+              return new Date(interval.start);
+            })
+          )
+        );
+      });
   },
   finishedTasks: state => {
-    return state.tasks.filter(task => task.state == 'finished');
+    return state.tasks
+      .filter(task => task.state == 'finished')
+      .sort((a, b) => {
+        return (
+          Math.min(
+            ...a.intervals.map(interval => {
+              return new Date(interval.start);
+            })
+          ) -
+          Math.min(
+            ...b.intervals.map(interval => {
+              return new Date(interval.start);
+            })
+          )
+        );
+      });
   },
   pendingTasks: state => {
-    return state.tasks.filter(task => task.state == 'pending');
+    return state.tasks
+      .filter(task => task.state == 'pending')
+      .sort((a, b) => {
+        return (
+          Math.min(
+            ...a.intervals.map(interval => {
+              return new Date(interval.start);
+            })
+          ) -
+          Math.min(
+            ...b.intervals.map(interval => {
+              return new Date(interval.start);
+            })
+          )
+        );
+      });
   },
 };
 
