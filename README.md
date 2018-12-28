@@ -17,7 +17,7 @@
 
 ## Backend API
 
-- See details in the [api-time-tracking](https://github.com/ccalvarez/api-time-tracking) repo.
+- See details of the Backend API in the [api-time-tracking](https://github.com/ccalvarez/api-time-tracking) repo.
 
 ## Important
 
