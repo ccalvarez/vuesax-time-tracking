@@ -6,16 +6,76 @@ const state = {
 
 const getters = {
   runningTasks: state => {
-    return state.tasks.filter(task => task.state == 'running');
+    return state.tasks
+      .filter(task => task.state == 'running')
+      .sort((a, b) => {
+        return (
+          Math.min(
+            ...a.intervals.map(interval => {
+              return new Date(interval.start);
+            })
+          ) -
+          Math.min(
+            ...b.intervals.map(interval => {
+              return new Date(interval.start);
+            })
+          )
+        );
+      });
   },
   pausedTasks: state => {
-    return state.tasks.filter(task => task.state == 'paused');
+    return state.tasks
+      .filter(task => task.state == 'paused')
+      .sort((a, b) => {
+        return (
+          Math.min(
+            ...a.intervals.map(interval => {
+              return new Date(interval.start);
+            })
+          ) -
+          Math.min(
+            ...b.intervals.map(interval => {
+              return new Date(interval.start);
+            })
+          )
+        );
+      });
   },
   finishedTasks: state => {
-    return state.tasks.filter(task => task.state == 'finished');
+    return state.tasks
+      .filter(task => task.state == 'finished')
+      .sort((a, b) => {
+        return (
+          Math.min(
+            ...a.intervals.map(interval => {
+              return new Date(interval.start);
+            })
+          ) -
+          Math.min(
+            ...b.intervals.map(interval => {
+              return new Date(interval.start);
+            })
+          )
+        );
+      });
   },
   pendingTasks: state => {
-    return state.tasks.filter(task => task.state == 'pending');
+    return state.tasks
+      .filter(task => task.state == 'pending')
+      .sort((a, b) => {
+        return (
+          Math.min(
+            ...a.intervals.map(interval => {
+              return new Date(interval.start);
+            })
+          ) -
+          Math.min(
+            ...b.intervals.map(interval => {
+              return new Date(interval.start);
+            })
+          )
+        );
+      });
   },
 };
 
@@ -23,10 +83,13 @@ const mutations = {
   updateTasks: (state, tasks) => {
     state.tasks = tasks;
   },
+  pauseTask: (state, taskId) => {
+    state.tasks.find(task => task._id == taskId).state = 'paused';
+  },
 };
 
 const actions = {
-  getTasks: ({ commit, state }) => {
+  getTasks: ({ commit }) => {
     return new Promise((resolve, reject) => {
       axios
         .get(
@@ -41,7 +104,28 @@ const actions = {
           }
         })
         .catch(error => {
-          reject();
+          reject(error);
+        });
+    });
+  },
+
+  pauseTask: ({ commit }, taskId) => {
+    return new Promise((resolve, reject) => {
+      axios
+        .patch(process.env.VUE_APP_APIURL.concat('/tasks'), {
+          taskId: taskId,
+          state: 'paused',
+        })
+        .then(response => {
+          if (response.status == 200) {
+            commit('pauseTask', taskId);
+            resolve();
+          } else {
+            reject(response);
+          }
+        })
+        .catch(error => {
+          reject(error);
         });
     });
   },
