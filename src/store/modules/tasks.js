@@ -61,7 +61,7 @@ const actions = {
             commit('pauseTask', taskId);
             resolve();
           } else {
-            reject(response.data);
+            reject(response);
           }
         })
         .catch(error => {
