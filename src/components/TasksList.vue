@@ -4,6 +4,7 @@
       <vs-list-header :icon="group.icon" :title="group.title" :color="group.color"></vs-list-header>
       <vs-list-item v-for="(task) in tasks" :key="task._id" :title="task.description" :subtitle="task.project.name">
         <vs-button v-if="state=='running'" color="warning" size="large" @click="pauseTask(task._id, $event)">Pausar</vs-button>
+        <vs-button :disabled="workInProgress" v-if="state=='paused'" color="success" size="large" @click="resumeTask(task._id, $event)">Reanudar</vs-button>
       </vs-list-item>
     </vs-list>
     <vs-popup :title="popupTitle" :active.sync="popupIsActive">
@@ -12,6 +13,8 @@
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   props: ['state', 'tasks'],
   data() {
@@ -22,6 +25,7 @@ export default {
     };
   },
   computed: {
+    ...mapGetters(['workInProgress']),
     group() {
       return {
         title:
@@ -54,11 +58,25 @@ export default {
           event.target.parentElement.disabled = false;
         })
         .catch(error => {
+          this.popupTitle = 'Atención'; // TODO: refactorizar los atributos del popup con un JSON
+          this.popupText = error.response.data.message;
+          this.popupIsActive = true;
+          event.target.parentElement.disabled = false;
+        });
+    },
+    resumeTask: function(taskId, event) {
+      event.target.parentElement.disabled = true;
+      this.$store
+        .dispatch('resumeTask', taskId)
+        .then(result => {
+          event.target.parentElement.disabled = false;
+        })
+        .catch(error => {
           this.popupTitle = 'Atención';
           this.popupText = error.response.data.message;
           this.popupIsActive = true;
           event.target.parentElement.disabled = false;
-        }); // TODO: esperar y actuar según el resultado de la Promise
+        });
     },
   },
 };

@@ -5,6 +5,9 @@ const state = {
 };
 
 const getters = {
+  workInProgress: state => {
+    return state.tasks.filter(task => task.state == 'running').length > 0;
+  },
   runningTasks: state => {
     return state.tasks
       .filter(task => task.state == 'running')
@@ -83,8 +86,8 @@ const mutations = {
   updateTasks: (state, tasks) => {
     state.tasks = tasks;
   },
-  pauseTask: (state, taskId) => {
-    state.tasks.find(task => task._id == taskId).state = 'paused';
+  updateTaskState: (state, payload) => {
+    state.tasks.find(task => task._id == payload.taskId).state = payload.state;
   },
 };
 
@@ -118,7 +121,28 @@ const actions = {
         })
         .then(response => {
           if (response.status == 200) {
-            commit('pauseTask', taskId);
+            commit('updateTaskState', { taskId: taskId, state: 'paused' });
+            resolve();
+          } else {
+            reject(response);
+          }
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  },
+
+  resumeTask: ({ commit }, taskId) => {
+    return new Promise((resolve, reject) => {
+      axios
+        .patch(process.env.VUE_APP_APIURL.concat('/tasks'), {
+          taskId: taskId,
+          state: 'running',
+        })
+        .then(response => {
+          if (response.status == 200) {
+            commit('updateTaskState', { taskId: taskId, state: 'running' });
             resolve();
           } else {
             reject(response);
