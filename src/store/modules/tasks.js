@@ -44,18 +44,19 @@ const getters = {
         );
       });
   },
+  // TODO: resolver cómo ordenar las finalizadas, por ahora las ordenaré por fecha de inicio de atención, descendente
   finishedTasks: state => {
     return state.tasks
       .filter(task => task.state == 'finished')
       .sort((a, b) => {
         return (
-          Math.min(
-            ...a.intervals.map(interval => {
+          Math.max(
+            ...b.intervals.map(interval => {
               return new Date(interval.start);
             })
           ) -
-          Math.min(
-            ...b.intervals.map(interval => {
+          Math.max(
+            ...a.intervals.map(interval => {
               return new Date(interval.start);
             })
           )
@@ -121,7 +122,7 @@ const actions = {
         })
         .then(response => {
           if (response.status == 200) {
-            commit('updateTaskState', { taskId: taskId, state: 'paused' });
+            commit('updateTaskState', { taskId: taskId, state: 'paused' }); // TODO: actualizar también intervals
             resolve();
           } else {
             reject(response);
@@ -142,7 +143,28 @@ const actions = {
         })
         .then(response => {
           if (response.status == 200) {
-            commit('updateTaskState', { taskId: taskId, state: 'running' });
+            commit('updateTaskState', { taskId: taskId, state: 'running' }); // TODO: actualizar también intervals
+            resolve();
+          } else {
+            reject(response);
+          }
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  },
+
+  finishTask: ({ commit }, taskId) => {
+    return new Promise((resolve, reject) => {
+      axios
+        .patch(process.env.VUE_APP_APIURL.concat('/tasks'), {
+          taskId: taskId,
+          state: 'finished',
+        })
+        .then(response => {
+          if (response.status == 200) {
+            commit('updateTaskState', { taskId: taskId, state: 'finished' }); // TODO: actualizar también intervals
             resolve();
           } else {
             reject(response);
