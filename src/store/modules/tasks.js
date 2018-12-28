@@ -134,7 +134,7 @@ const actions = {
     });
   },
 
-  resumeTask: ({ commit }, taskId) => {
+  resumeOrStartTask: ({ commit }, taskId) => {
     return new Promise((resolve, reject) => {
       axios
         .patch(process.env.VUE_APP_APIURL.concat('/tasks'), {
