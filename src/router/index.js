@@ -34,5 +34,9 @@ export default new Router({
         index: 2,
       },
     },
+    {
+      path: '*',
+      redirect: '/tasks',
+    },
   ],
 });
