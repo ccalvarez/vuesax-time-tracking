@@ -5,22 +5,20 @@
       :color="colorx"
       text-color="rgba(255,255,255,.6)"
       active-text-color="rgba(255,255,255,1)"
-      class="myNavbar">
+      class="myNavbar"
+    >
+      <vs-navbar-title>Time Tracking</vs-navbar-title>
 
-      <vs-navbar-title>
-        Time Tracking
-      </vs-navbar-title>
-
-      <vs-navbar-item index="0" >
-        <a href="#">Tareas</a>
+      <vs-navbar-item index="0">
+        <router-link to="/tasks">Tareas</router-link>
       </vs-navbar-item>
       <vs-navbar-item index="1">
-        <a href="#">Sistemas</a>
+        <!-- <a href="#">Sistemas</a> -->
+        <router-link to="/projects">Sistemas</router-link>
       </vs-navbar-item>
       <vs-navbar-item index="2">
-        <a href="#">Informe</a>
+        <router-link to="/report">Informe</router-link>
       </vs-navbar-item>
-
 
       <vs-spacer></vs-spacer>
 
