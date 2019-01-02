@@ -1,7 +1,7 @@
 <template>
   <div class="centerx">
     <vs-navbar
-      v-model="indexActive"
+      :value="indexActive"
       :color="colorx"
       text-color="rgba(255,255,255,.6)"
       active-text-color="rgba(255,255,255,1)"
@@ -13,7 +13,6 @@
         <router-link to="/tasks">Tareas</router-link>
       </vs-navbar-item>
       <vs-navbar-item index="1">
-        <!-- <a href="#">Sistemas</a> -->
         <router-link to="/projects">Sistemas</router-link>
       </vs-navbar-item>
       <vs-navbar-item index="2">
@@ -31,8 +30,12 @@
 export default {
   data: () => ({
     colorx: '#7fa6ad',
-    indexActive: 0,
   }),
+  computed: {
+    indexActive() {
+      return this.$route.matched[0].meta.index;
+    },
+  },
 };
 </script>
 

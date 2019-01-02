@@ -16,14 +16,23 @@ export default new Router({
       components: {
         content: TasksListsContainer,
       },
+      meta: {
+        index: 0,
+      },
     },
     {
       path: '/projects',
       name: 'projects',
+      meta: {
+        index: 1,
+      },
     },
     {
       path: '/report',
       name: 'report',
+      meta: {
+        index: 2,
+      },
     },
   ],
 });
