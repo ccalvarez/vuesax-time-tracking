@@ -1,6 +1,9 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import TasksListsContainer from '@/components/TasksListsContainer';
+import ProjectsList from '@/components/ProjectsList';
+// Lazy Loading:
+// const ProjectsList = () => import('@/components/ProjectsList');
 
 Vue.use(Router);
 
@@ -23,6 +26,9 @@ export default new Router({
     {
       path: '/projects',
       name: 'projects',
+      components: {
+        content: ProjectsList,
+      },
       meta: {
         index: 1,
       },
