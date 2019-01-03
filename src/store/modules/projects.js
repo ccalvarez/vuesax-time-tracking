@@ -14,6 +14,9 @@ const mutations = {
   updateProjects: (state, projects) => {
     state.projects = projects;
   },
+  addProject: (state, project) => {
+    state.projects.push(project);
+  },
 };
 
 const actions = {
@@ -31,6 +34,29 @@ const actions = {
             resolve();
           } else if (response.status == 204) {
             resolve();
+          }
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  },
+  addProject: ({ commit }, project) => {
+    return new Promise((resolve, reject) => {
+      axios
+        .post(process.env.VUE_APP_APIURL.concat('/projects'), {
+          name: project.name,
+          userId: project.userId,
+        })
+        .then(response => {
+          if (response.status == '201') {
+            commit('addProject', {
+              name: project.name,
+              _id: response.data._id,
+            });
+            resolve();
+          } else {
+            reject(response);
           }
         })
         .catch(error => {
