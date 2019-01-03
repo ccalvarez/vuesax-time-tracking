@@ -16,13 +16,13 @@
       <vs-col vs-lg="2" vs-sm="1" vs-xs="0"></vs-col>
     </vs-row>
 
-    <vs-row>
+    <!-- <vs-row>
       <vs-col vs-lg="2" vs-sm="1" vs-xs="0"></vs-col>
       <vs-col vs-lg="8" vs-sm="10" vs-xs="12">
         <page-footer class="page-footer"></page-footer>
       </vs-col>
       <vs-col vs-lg="2" vs-sm="1" vs-xs="0"></vs-col>
-    </vs-row>
+    </vs-row>-->
   </div>
 </template>
 
@@ -41,6 +41,6 @@ export default {
 
 <style scoped>
 .page-footer {
-  margin-top: 80px;
+  margin-top: 60px;
 }
 </style>

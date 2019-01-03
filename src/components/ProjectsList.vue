@@ -98,7 +98,7 @@ export default {
 </script>
 <style lang="stylus" scoped>
 .vs-con-table {
-  margin-top: 20px;
+  margin-top: 8px;
 }
 
 #addButton {

@@ -2,7 +2,7 @@
   <div>
     <vs-row id="content-header">
       <vs-col>
-        <vs-button class="addButton" color="success" size="large" @click="addTask()">Nuevo Sistema</vs-button>
+        <vs-button class="addButton" color="success" size="large" @click="addTask()">Nueva Tarea</vs-button>
       </vs-col>
     </vs-row>
     <div id="lists-container">
@@ -18,9 +18,6 @@ import { mapGetters } from 'vuex';
 import TasksList from './TasksList.vue';
 
 export default {
-  mounted() {
-    // document.getElementById('content-header').style.display = 'inline-flex';
-  },
   components: {
     tasksList: TasksList,
   },
@@ -36,7 +33,7 @@ export default {
 </script>
 <style>
 #content-header {
-  margin-top: 20px;
+  margin-top: 8px;
 }
 .addButton {
   float: right;
@@ -45,7 +42,6 @@ export default {
   margin: 0 auto; */
 }
 #lists-container {
-  margin-top: 10px;
-  /* padding: 5px; */
+  margin-top: 5px;
 }
 </style>
