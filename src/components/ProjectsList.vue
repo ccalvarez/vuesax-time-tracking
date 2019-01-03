@@ -1,7 +1,7 @@
 <template lang="html">
   <div>
     <vs-table stripe :data="projects">
-      <template slot="header" class="derecha">
+      <template slot="header">
         <vs-button id="addButton" color="success" size="large" @click="addProject()">Nuevo Sistema</vs-button>
       </template>
       <template slot="thead">
@@ -29,22 +29,14 @@ export default {
       .then()
       .catch(); // TODO: esperar y actuar según el resultado de la Promise
   },
+  mounted() {
+    document.getElementsByClassName('header-table')[0].style.display = 'block';
+  },
 };
 </script>
 <style scoped>
 .vs-con-table {
   margin-top: 20px;
-}
-.vs-table--header {
-  text-align: right;
-  background-color: orange;
-  box-sizing: border-box;
-  outline: none;
-  display: block;
-}
-.derecha {
-  text-align: right;
-  background-color: orange;
 }
 #addButton {
   position: relative;
