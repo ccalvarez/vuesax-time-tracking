@@ -49,12 +49,6 @@ export default {
       return this.$store.getters.projects;
     },
   },
-  beforeCreate() {
-    this.$store
-      .dispatch('getProjects')
-      .then()
-      .catch(); // TODO: esperar y actuar según el resultado de la Promise
-  },
   mounted() {
     document.getElementsByClassName('header-table')[0].style.display = 'block';
   },
@@ -98,7 +92,7 @@ export default {
 </script>
 <style lang="stylus" scoped>
 .vs-con-table {
-  margin-top: 20px;
+  margin-top: 8px;
 }
 
 #addButton {

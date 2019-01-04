@@ -64,22 +64,7 @@ const getters = {
       });
   },
   pendingTasks: state => {
-    return state.tasks
-      .filter(task => task.state == 'pending')
-      .sort((a, b) => {
-        return (
-          Math.min(
-            ...a.intervals.map(interval => {
-              return new Date(interval.start);
-            })
-          ) -
-          Math.min(
-            ...b.intervals.map(interval => {
-              return new Date(interval.start);
-            })
-          )
-        );
-      });
+    return state.tasks.filter(task => task.state == 'pending');
   },
 };
 
@@ -89,6 +74,9 @@ const mutations = {
   },
   updateTaskState: (state, payload) => {
     state.tasks.find(task => task._id == payload.taskId).state = payload.state;
+  },
+  addTask: (state, task) => {
+    state.tasks.push(task);
   },
 };
 
@@ -165,6 +153,54 @@ const actions = {
         .then(response => {
           if (response.status == 200) {
             commit('updateTaskState', { taskId: taskId, state: 'finished' }); // TODO: actualizar también intervals
+            resolve();
+          } else {
+            reject(response);
+          }
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  },
+  addTask: ({ commit, rootGetters }, task) => {
+    return new Promise((resolve, reject) => {
+      axios
+        .post(process.env.VUE_APP_APIURL.concat('/tasks'), task)
+        .then(response => {
+          if (response.status == '201') {
+            commit(
+              'addTask',
+              task.start
+                ? {
+                    description: task.description,
+                    intervals: [
+                      {
+                        start: response.start,
+                        end: null,
+                      },
+                    ],
+                    state: 'running',
+                    project: {
+                      name: rootGetters.projects.find(
+                        project => project._id == task.projectId
+                      ).name,
+                      _id: task.projectId,
+                    },
+                    _id: response.data._id,
+                  }
+                : {
+                    description: task.description,
+                    state: 'pending',
+                    project: {
+                      name: rootGetters.projects.find(
+                        project => project._id == task.projectId
+                      ).name,
+                      _id: task.projectId,
+                    },
+                    _id: response.data._id,
+                  }
+            );
             resolve();
           } else {
             reject(response);
