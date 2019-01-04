@@ -2,9 +2,13 @@ import axios from 'axios';
 
 const state = {
   tasks: [],
+  userId: process.env.VUE_APP_USERID,
 };
 
 const getters = {
+  userId: state => {
+    return state.userId;
+  },
   workInProgress: state => {
     return state.tasks.filter(task => task.state == 'running').length > 0;
   },
@@ -78,15 +82,16 @@ const mutations = {
   addTask: (state, task) => {
     state.tasks.push(task);
   },
+  updateUserId: (state, userId) => {
+    state.userId = userId;
+  },
 };
 
 const actions = {
-  getTasks: ({ commit }) => {
+  getTasks: ({ commit, state }) => {
     return new Promise((resolve, reject) => {
       axios
-        .get(
-          process.env.VUE_APP_APIURL + '/users/5c1591a080980742861d7ef6/tasks'
-        )
+        .get(process.env.VUE_APP_APIURL + `/users/${state.userId}/tasks`)
         .then(response => {
           if (response.status == 200) {
             commit('updateTasks', response.data);
@@ -210,6 +215,15 @@ const actions = {
           reject(error);
         });
     });
+  },
+  updateUserId: ({ commit, dispatch }, userId) => {
+    commit('updateUserId', userId);
+    dispatch('getTasks')
+      .then()
+      .catch(); // TODO: esperar y actuar segÃºn el resultado de la Promise
+    dispatch('getProjects')
+      .then()
+      .catch(); // TODO: esperar y actuar según el resultado de la Promise
   },
 };
 

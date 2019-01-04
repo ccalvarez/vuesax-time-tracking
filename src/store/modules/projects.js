@@ -20,12 +20,12 @@ const mutations = {
 };
 
 const actions = {
-  getProjects: ({ commit }) => {
+  getProjects: ({ commit, rootGetters }) => {
     return new Promise((resolve, reject) => {
       axios
         .get(
           process.env.VUE_APP_APIURL.concat(
-            '/users/5c1591a080980742861d7ef6/projects'
+            `/users/${rootGetters.userId}/projects`
           )
         )
         .then(response => {

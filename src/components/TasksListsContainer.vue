@@ -1,5 +1,12 @@
 <template>
   <div>
+    <vs-input
+      type="password"
+      class="inputx"
+      label="User ID"
+      placeholder="User ID"
+      v-model="userId"
+    />
     <vs-row id="content-header">
       <vs-col>
         <vs-button class="addButton" color="success" size="large" @click="addTask()">Nueva Tarea</vs-button>
@@ -73,6 +80,14 @@ export default {
       'pendingTasks',
       'workInProgress',
     ]),
+    userId: {
+      get: function() {
+        return this.$store.getters.userId;
+      },
+      set: function(value) {
+        this.$store.dispatch('updateUserId', value.trim());
+      },
+    },
     projects() {
       return this.$store.getters.projects;
     },
@@ -98,7 +113,7 @@ export default {
           .dispatch('addTask', {
             description: this.taskDescription.trim(),
             projectId: this.projectId.trim(),
-            userId: '5c1591a080980742861d7ef6',
+            userId: this.$store.getters.userId,
             start: this.start,
             includeInReport: this.includeInReport,
           })
