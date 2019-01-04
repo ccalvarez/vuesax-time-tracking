@@ -50,7 +50,7 @@ export default {
       popupText: '',
       taskDescription: '',
       projectId: '',
-      start: false,
+      start: !this.workInProgress,
       includeInReport: true,
     };
   },
@@ -58,7 +58,7 @@ export default {
     popupIsActive() {
       this.taskDescription = '';
       this.projectId = '';
-      this.start = false;
+      this.start = !this.workInProgress;
       this.includeInReport = true;
     },
   },
@@ -80,6 +80,39 @@ export default {
   methods: {
     addTask() {
       this.popupIsActive = true;
+    },
+    saveTask(event) {
+      event.target.parentElement.disabled = true;
+      if (!this.taskDescription) {
+        this.popupTitle = 'Atención'; // TODO: refactorizar los atributos del popup con un JSON
+        this.popupText = 'Descripción de la tarea es requerida';
+        this.popupInfoIsActive = true;
+        event.target.parentElement.disabled = false;
+      } else if (!this.projectId) {
+        this.popupTitle = 'Atención'; // TODO: refactorizar los atributos del popup con un JSON
+        this.popupText = 'Sistema es requerido';
+        this.popupInfoIsActive = true;
+        event.target.parentElement.disabled = false;
+      } else {
+        this.$store
+          .dispatch('addTask', {
+            description: this.taskDescription.trim(),
+            projectId: this.projectId.trim(),
+            userId: '5c1591a080980742861d7ef6',
+            start: this.start,
+            includeInReport: this.includeInReport,
+          })
+          .then(result => {
+            event.target.parentElement.disabled = false;
+            this.popupIsActive = false;
+          })
+          .catch(error => {
+            this.popupTitle = 'Atención';
+            this.popupText = error.response.data.message;
+            this.popupInfoIsActive = true;
+            event.target.parentElement.disabled = false;
+          });
+      }
     },
   },
 };
@@ -116,7 +149,7 @@ export default {
 
 .popup-example {
   .con-select {
-    width: 75%;
+    width: 80%;
   }
 }
 
