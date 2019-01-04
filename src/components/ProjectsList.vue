@@ -49,12 +49,6 @@ export default {
       return this.$store.getters.projects;
     },
   },
-  beforeCreate() {
-    this.$store
-      .dispatch('getProjects')
-      .then()
-      .catch(); // TODO: esperar y actuar según el resultado de la Promise
-  },
   mounted() {
     document.getElementsByClassName('header-table')[0].style.display = 'block';
   },

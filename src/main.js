@@ -17,9 +17,14 @@ new Vue({
   router,
   render: h => h(App),
   beforeCreate() {
+    // TODO: refactorizar, garantizar que la aplicación se cargue hasta que se obtuvieron todos los datos
     this.$store
       .dispatch('getTasks')
       .then()
       .catch(); // TODO: esperar y actuar segÃºn el resultado de la Promise
+    this.$store
+      .dispatch('getProjects')
+      .then()
+      .catch(); // TODO: esperar y actuar según el resultado de la Promise
   },
 }).$mount('#app');
