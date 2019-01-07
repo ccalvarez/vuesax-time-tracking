@@ -168,6 +168,7 @@ const actions = {
         });
     });
   },
+
   addTask: ({ commit, rootGetters }, task) => {
     return new Promise((resolve, reject) => {
       axios
@@ -216,6 +217,7 @@ const actions = {
         });
     });
   },
+
   updateUserId: ({ commit, dispatch }, userId) => {
     commit('updateUserId', userId);
     dispatch('getTasks')
@@ -224,6 +226,23 @@ const actions = {
     dispatch('getProjects')
       .then()
       .catch(); // TODO: esperar y actuar según el resultado de la Promise
+  },
+
+  login: (context, user) => {
+    return new Promise((resolve, reject) => {
+      axios
+        .post(process.env.VUE_APP_APIURL.concat('/users/login'), user)
+        .then(response => {
+          if (response.status == 200) {
+            resolve(response.data);
+          } else {
+            reject(response);
+          }
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
   },
 };
 
