@@ -11,8 +11,8 @@
 export default {
   data() {
     return {
-      email: 'pruebas@gmail.com',
-      password: 'pruebas',
+      email: '',
+      password: '',
     };
   },
   methods: {
