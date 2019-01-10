@@ -2,7 +2,6 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import TasksListsContainer from '@/components/TasksListsContainer';
 import ProjectsList from '@/components/ProjectsList';
-import LoginForm from '@/components/LoginForm';
 // Lazy Loading:
 // const ProjectsList = () => import('@/components/ProjectsList');
 
@@ -13,13 +12,6 @@ export default new Router({
     {
       path: '/',
       redirect: '/tasks',
-    },
-    {
-      path: '/login',
-      name: 'login',
-      components: {
-        content: LoginForm,
-      },
     },
     {
       path: '/tasks',

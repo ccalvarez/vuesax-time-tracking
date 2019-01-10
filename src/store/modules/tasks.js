@@ -2,13 +2,9 @@ import axios from 'axios';
 
 const state = {
   tasks: [],
-  userId: process.env.VUE_APP_USERID,
 };
 
 const getters = {
-  userId: state => {
-    return state.userId;
-  },
   workInProgress: state => {
     return state.tasks.filter(task => task.state == 'running').length > 0;
   },
@@ -82,16 +78,15 @@ const mutations = {
   addTask: (state, task) => {
     state.tasks.push(task);
   },
-  updateUserId: (state, userId) => {
-    state.userId = userId;
-  },
 };
 
 const actions = {
-  getTasks: ({ commit, state }) => {
+  getTasks: ({ commit }) => {
     return new Promise((resolve, reject) => {
       axios
-        .get(process.env.VUE_APP_APIURL + `/users/${state.userId}/tasks`)
+        .get(
+          process.env.VUE_APP_APIURL + '/users/5c1591a080980742861d7ef6/tasks'
+        )
         .then(response => {
           if (response.status == 200) {
             commit('updateTasks', response.data);
@@ -168,7 +163,6 @@ const actions = {
         });
     });
   },
-
   addTask: ({ commit, rootGetters }, task) => {
     return new Promise((resolve, reject) => {
       axios
@@ -208,33 +202,6 @@ const actions = {
                   }
             );
             resolve();
-          } else {
-            reject(response);
-          }
-        })
-        .catch(error => {
-          reject(error);
-        });
-    });
-  },
-
-  updateUserId: ({ commit, dispatch }, userId) => {
-    commit('updateUserId', userId);
-    dispatch('getTasks')
-      .then()
-      .catch(); // TODO: esperar y actuar segÃºn el resultado de la Promise
-    dispatch('getProjects')
-      .then()
-      .catch(); // TODO: esperar y actuar según el resultado de la Promise
-  },
-
-  login: (context, user) => {
-    return new Promise((resolve, reject) => {
-      axios
-        .post(process.env.VUE_APP_APIURL.concat('/users/login'), user)
-        .then(response => {
-          if (response.status == 200) {
-            resolve(response.data);
           } else {
             reject(response);
           }

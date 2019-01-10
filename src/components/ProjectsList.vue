@@ -73,7 +73,7 @@ export default {
         this.$store
           .dispatch('addProject', {
             name: this.projectName.trim(),
-            userId: this.$store.getters.userId,
+            userId: '5c1591a080980742861d7ef6',
           })
           .then(result => {
             event.target.parentElement.disabled = false;
