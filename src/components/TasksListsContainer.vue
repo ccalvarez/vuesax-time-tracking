@@ -64,7 +64,7 @@ export default {
   watch: {
     popupIsActive() {
       this.taskDescription = '';
-      this.projectId = '';
+      // this.projectId = '';
       this.start = !this.workInProgress;
       this.includeInReport = true;
     },
