@@ -77,7 +77,40 @@ const mutations = {
     state.tasks = tasks;
   },
   updateTaskState: (state, payload) => {
-    state.tasks.find(task => task._id == payload.taskId).state = payload.state;
+    let taskInStore = state.tasks.find(task => task._id == payload.taskId);
+
+    if (payload.state == 'running') {
+      if (taskInStore.state == 'pending') {
+        // tarea está pendiente, no tiene arreglo de intervalos, crear la propiedad intervals:
+        taskInStore.intervals = [
+          {
+            start: payload.start,
+            end: null,
+          },
+        ];
+      } else {
+        // tarea está pausada, ya tiene arreglo de intervalos, agregar al arreglo un nuevo intervalo:
+        taskInStore.intervals.push({
+          start: payload.start,
+          end: null,
+        });
+      }
+    } else if (
+      // pausar una en ejecución o finalizar una en ejecución ==> cerrar su último intervalo
+      payload.state == 'paused' ||
+      (payload.state == 'finished' && taskInStore.state == 'running')
+    ) {
+      // buscar el último intervalo y cerrarlo:
+      const lastIntervalStart = Math.max(
+        ...taskInStore.intervals.map(interval => new Date(interval.start))
+      );
+      let lastInterval = taskInStore.intervals.find(
+        interval => interval.start == new Date(lastIntervalStart).toISOString()
+      );
+      lastInterval.end = payload.end;
+    }
+    // en todos los casos, actualizar el estado de la tarea:
+    taskInStore.state = payload.state;
   },
   addTask: (state, task) => {
     state.tasks.push(task);
@@ -115,7 +148,11 @@ const actions = {
         })
         .then(response => {
           if (response.status == 200) {
-            commit('updateTaskState', { taskId: taskId, state: 'paused' }); // TODO: actualizar también intervals
+            commit('updateTaskState', {
+              end: response.data.end,
+              taskId: taskId,
+              state: 'paused',
+            });
             resolve();
           } else {
             reject(response);
@@ -136,7 +173,11 @@ const actions = {
         })
         .then(response => {
           if (response.status == 200) {
-            commit('updateTaskState', { taskId: taskId, state: 'running' }); // TODO: actualizar también intervals
+            commit('updateTaskState', {
+              start: response.data.start,
+              state: 'running',
+              taskId: taskId,
+            });
             resolve();
           } else {
             reject(response);
@@ -157,7 +198,12 @@ const actions = {
         })
         .then(response => {
           if (response.status == 200) {
-            commit('updateTaskState', { taskId: taskId, state: 'finished' }); // TODO: actualizar también intervals
+            commit(
+              'updateTaskState',
+              response.data.end
+                ? { end: response.data.end, taskId: taskId, state: 'finished' }
+                : { taskId: taskId, state: 'finished' }
+            );
             resolve();
           } else {
             reject(response);
@@ -182,7 +228,7 @@ const actions = {
                     description: task.description,
                     intervals: [
                       {
-                        start: response.start,
+                        start: response.data.start,
                         end: null,
                       },
                     ],
