@@ -21,7 +21,12 @@
     <!-- Task properties form -->
     <div class="centerx">
       <vs-popup classContent="popup-example" title="Tarea" :active.sync="popupIsActive">
-        <vs-input class="inputx" placeholder="Descripción de la tarea" v-model="taskDescription"/>
+        <vs-input
+          ref="taskDescription"
+          class="inputx"
+          placeholder="Descripción de la tarea"
+          v-model="taskDescription"
+        />
         <vs-select label="Sistema" v-model="projectId">
           <vs-select-item
             :key="project._id"
@@ -95,6 +100,9 @@ export default {
       // this.projectId = '';
       this.start = !this.workInProgress;
       this.includeInReport = true;
+      if (this.popupIsActive) {
+        this.$nextTick(() => this.setFocusOnInput('taskDescription'));
+      }
     },
   },
   components: {
@@ -121,6 +129,16 @@ export default {
     },
   },
   methods: {
+    setFocusOnInput(inputName) {
+      /**
+       * @see https://vuejs.org/v2/api/#vm-el
+       * @see https://vuejs.org/v2/api/#vm-refs
+       */
+      // you could just call this.$refs[inputName].focusInput() but i'm not shure if it belongs to the public API
+      let inputEl = this.$refs[inputName].$el.querySelector('input');
+      console.log(inputEl.focus); // <== See if `focus` method avaliable
+      inputEl.focus(); //  <== This time the focus will work properly
+    },
     addTask() {
       this.popupIsActive = true;
     },
