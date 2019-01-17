@@ -35,7 +35,12 @@
         <vs-checkbox v-model="includeInReport">Incluir en el informe de labores</vs-checkbox>
         <br>
         <br>
-        <vs-button @click="saveTask($event)" color="primary" type="filled">Aceptar</vs-button>
+        <vs-button
+          id="saveButton"
+          @click="saveTask($event.target.parentElement)"
+          color="primary"
+          type="filled"
+        >Aceptar</vs-button>
         <!-- Information-Warnings-Errors popup -->
         <vs-popup :title="popupTitle" :active.sync="popupInfoIsActive">
           <p v-html="popupText"></p>
@@ -60,6 +65,29 @@ export default {
       start: !this.workInProgress,
       includeInReport: true,
     };
+  },
+  mounted() {
+    const vm = this;
+    document.addEventListener('keyup', function(evt) {
+      if (evt.key == 'Insert') {
+        if (!vm.popupIsActive) {
+          vm.popupIsActive = true;
+        }
+      } else if (evt.key == 'Enter') {
+        if (vm.popupIsActive && !vm.popupInfoIsActive) {
+          const element = document.getElementById('saveButton');
+          vm.saveTask(element);
+        } else if (vm.popupInfoIsActive) {
+          vm.popupInfoIsActive = false;
+        }
+      } else if (evt.key == 'Escape') {
+        if (vm.popupInfoIsActive) {
+          vm.popupInfoIsActive = false;
+        } else if (vm.popupIsActive) {
+          vm.popupIsActive = false;
+        }
+      }
+    });
   },
   watch: {
     popupIsActive() {
@@ -96,18 +124,21 @@ export default {
     addTask() {
       this.popupIsActive = true;
     },
-    saveTask(event) {
-      event.target.parentElement.disabled = true;
+    saveTask(button) {
+      //event.target.parentElement.disabled = true;
+      button.disabled = true;
       if (!this.taskDescription) {
         this.popupTitle = 'Atención'; // TODO: refactorizar los atributos del popup con un JSON
         this.popupText = 'Descripción de la tarea es requerida';
         this.popupInfoIsActive = true;
-        event.target.parentElement.disabled = false;
+        //event.target.parentElement.disabled = false;
+        button.disabled = false;
       } else if (!this.projectId) {
         this.popupTitle = 'Atención'; // TODO: refactorizar los atributos del popup con un JSON
         this.popupText = 'Sistema es requerido';
         this.popupInfoIsActive = true;
-        event.target.parentElement.disabled = false;
+        // event.target.parentElement.disabled = false;
+        button.disabled = false;
       } else {
         this.$store
           .dispatch('addTask', {
@@ -118,14 +149,16 @@ export default {
             includeInReport: this.includeInReport,
           })
           .then(result => {
-            event.target.parentElement.disabled = false;
+            // event.target.parentElement.disabled = false;
+            button.disabled = false;
             this.popupIsActive = false;
           })
           .catch(error => {
             this.popupTitle = 'Atención';
             this.popupText = error.response.data.message;
             this.popupInfoIsActive = true;
-            event.target.parentElement.disabled = false;
+            // event.target.parentElement.disabled = false;
+            button.disabled = false;
           });
       }
     },
