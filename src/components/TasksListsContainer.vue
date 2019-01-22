@@ -27,7 +27,7 @@
           placeholder="Descripción de la tarea"
           v-model="taskDescription"
         />
-        <vs-select label="Sistema" v-model="projectId">
+        <vs-select label="Sistema" v-model="projectId" autocomplete>
           <vs-select-item
             :key="project._id"
             :value="project._id"
