@@ -22,7 +22,7 @@
       <br>
       <br>
       <br>
-        <vs-button @click="saveProject($event)" color="primary" type="filled">Aceptar</vs-button>
+        <vs-button id="saveButton" @click="saveProject($event.target.parentElement)" color="primary" type="filled">Aceptar</vs-button>
         <!-- Information-Warnings-Errors popup -->
         <vs-popup :title="popupTitle" :active.sync="popupInfoIsActive">
           <p v-html="popupText"></p>
@@ -51,6 +51,28 @@ export default {
   },
   mounted() {
     document.getElementsByClassName('header-table')[0].style.display = 'block';
+
+    const vm = this;
+    document.addEventListener('keyup', function(evt) {
+      if (evt.key == 'Insert') {
+        if (!vm.popupIsActive) {
+          vm.popupIsActive = true;
+        }
+      } else if (evt.key == 'Enter') {
+        if (vm.popupIsActive && !vm.popupInfoIsActive) {
+          const element = document.getElementById('saveButton');
+          vm.saveProject(element);
+        } else if (vm.popupInfoIsActive) {
+          vm.popupInfoIsActive = false;
+        }
+      } else if (evt.key == 'Escape') {
+        if (vm.popupInfoIsActive) {
+          vm.popupInfoIsActive = false;
+        } else if (vm.popupIsActive) {
+          vm.popupIsActive = false;
+        }
+      }
+    });
   },
   watch: {
     popupIsActive() {
@@ -61,14 +83,13 @@ export default {
     addProject() {
       this.popupIsActive = true;
     },
-    saveProject(event) {
-      event.target.parentElement.disabled = true;
-
+    saveProject(button) {
+      button.disabled = true;
       if (!this.projectName) {
         this.popupTitle = 'Atención'; // TODO: refactorizar los atributos del popup con un JSON
         this.popupText = 'Nombre del sistema es requerido';
         this.popupInfoIsActive = true;
-        event.target.parentElement.disabled = false;
+        button.disabled = false;
       } else {
         this.$store
           .dispatch('addProject', {
@@ -76,14 +97,14 @@ export default {
             userId: this.$store.getters.userId,
           })
           .then(result => {
-            event.target.parentElement.disabled = false;
+            button.disabled = false;
             this.popupIsActive = false;
           })
           .catch(error => {
             this.popupTitle = 'Atención';
             this.popupText = error.response.data.message;
             this.popupInfoIsActive = true;
-            event.target.parentElement.disabled = false;
+            button.disabled = false;
           });
       }
     },
