@@ -18,7 +18,7 @@
     <!-- Project properties form -->
     <div class="centerx">
       <vs-popup classContent="popup-example" title="Sistema" :active.sync="popupIsActive">
-        <vs-input class="inputx" placeholder="Nombre del sistema" v-model="projectName" />
+        <vs-input ref="projectName" class="inputx" placeholder="Nombre del sistema" v-model="projectName" />
       <br>
       <br>
       <br>
@@ -77,9 +77,23 @@ export default {
   watch: {
     popupIsActive() {
       this.projectName = '';
+      if (this.popupIsActive) {
+        this.$nextTick(() => this.setFocusOnInput('projectName'));
+      }
     },
   },
   methods: {
+    setFocusOnInput(inputName) {
+      // TODO:
+      /**
+       * @see https://vuejs.org/v2/api/#vm-el
+       * @see https://vuejs.org/v2/api/#vm-refs
+       */
+      // you could just call this.$refs[inputName].focusInput() but i'm not shure if it belongs to the public API
+      let inputEl = this.$refs[inputName].$el.querySelector('input');
+      console.log(inputEl.focus); // <== See if `focus` method avaliable
+      inputEl.focus(); //  <== This time the focus will work properly
+    },
     addProject() {
       this.popupIsActive = true;
     },
