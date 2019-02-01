@@ -91,7 +91,6 @@ export default {
        */
       // you could just call this.$refs[inputName].focusInput() but i'm not shure if it belongs to the public API
       let inputEl = this.$refs[inputName].$el.querySelector('input');
-      console.log(inputEl.focus); // <== See if `focus` method avaliable
       inputEl.focus(); //  <== This time the focus will work properly
     },
     addProject() {
