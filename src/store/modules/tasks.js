@@ -3,6 +3,7 @@ import axios from 'axios';
 const state = {
   tasks: [],
   userId: process.env.VUE_APP_USERID,
+  reportTasks: [],
 };
 
 const getters = {
@@ -70,6 +71,9 @@ const getters = {
   pendingTasks: state => {
     return state.tasks.filter(task => task.state == 'pending');
   },
+  reportTasks: state => {
+    return state.reportTasks;
+  },
 };
 
 const mutations = {
@@ -117,6 +121,9 @@ const mutations = {
   },
   updateUserId: (state, userId) => {
     state.userId = userId;
+  },
+  updateReportTasks: (state, tasks) => {
+    state.raportTasks = tasks;
   },
 };
 
@@ -283,6 +290,28 @@ const actions = {
             resolve(response.data);
           } else {
             reject(response);
+          }
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  },
+
+  getReportTasks: ({ commit, state }, range) => {
+    console.log(range);
+    return new Promise((resolve, reject) => {
+      axios
+        .post(
+          process.env.VUE_APP_APIURL + `/users/${state.userId}/report`,
+          range
+        )
+        .then(response => {
+          if (response.status == 200) {
+            commit('updateReportTasks', response.data);
+            resolve();
+          } else if (response.status == 204) {
+            resolve(); // TODO: resolver qué mostrar en caso de que no haya tareas
           }
         })
         .catch(error => {

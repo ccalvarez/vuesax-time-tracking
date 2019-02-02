@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import Datepicker from 'vuejs-datepicker';
 export default {
   data() {
@@ -24,10 +25,22 @@ export default {
   components: {
     Datepicker,
   },
+  computed: {
+    ...mapGetters(['reportTasks']),
+  },
   methods: {
     generateReport() {
-      console.log(this.start);
-      console.log(this.end);
+      let end = this.end;
+      end.setDate(end.getDate() + 1);
+
+      this.$store.dispatch('getReportTasks', {
+        start: new Date(
+          this.start.getFullYear(),
+          this.start.getMonth(),
+          this.start.getDate()
+        ),
+        end: new Date(end.getFullYear(), end.getMonth(), end.getDate()),
+      });
     },
   },
 };
