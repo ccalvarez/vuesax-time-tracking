@@ -3,7 +3,7 @@ import axios from 'axios';
 const state = {
   tasks: [],
   userId: process.env.VUE_APP_USERID,
-  reportTasks: [],
+  report: [],
 };
 
 const getters = {
@@ -72,7 +72,7 @@ const getters = {
     return state.tasks.filter(task => task.state == 'pending');
   },
   reportTasks: state => {
-    return state.reportTasks;
+    return state.report;
   },
 };
 
@@ -123,7 +123,7 @@ const mutations = {
     state.userId = userId;
   },
   updateReportTasks: (state, tasks) => {
-    state.raportTasks = tasks;
+    state.report = tasks;
   },
 };
 
@@ -299,7 +299,6 @@ const actions = {
   },
 
   getReportTasks: ({ commit, state }, range) => {
-    console.log(range);
     return new Promise((resolve, reject) => {
       axios
         .post(
