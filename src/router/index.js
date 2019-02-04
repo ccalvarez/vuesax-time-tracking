@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import TasksListsContainer from '@/components/TasksListsContainer';
 import ProjectsList from '@/components/ProjectsList';
 import LoginForm from '@/components/LoginForm';
+import Report from '@/components/Report';
 // Lazy Loading:
 // const ProjectsList = () => import('@/components/ProjectsList');
 
@@ -44,6 +45,9 @@ export default new Router({
     {
       path: '/report',
       name: 'report',
+      components: {
+        content: Report,
+      },
       meta: {
         index: 2,
       },
