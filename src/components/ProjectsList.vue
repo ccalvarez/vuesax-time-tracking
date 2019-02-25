@@ -18,7 +18,7 @@
     <!-- Project properties form -->
     <div class="centerx">
       <vs-popup classContent="popup-example" title="Sistema" :active.sync="popupIsActive">
-        <vs-input ref="projectName" class="inputx" placeholder="Nombre del sistema" v-model="projectName" />
+        <vs-input ref="projectName" class="inputx" label-placeholder="Nombre del sistema" v-model="projectName" />
       <br>
       <br>
       <br>

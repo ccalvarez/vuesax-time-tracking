@@ -1,12 +1,6 @@
 <template>
   <div>
-    <vs-input
-      type="password"
-      class="inputx"
-      label="User ID"
-      placeholder="User ID"
-      v-model="userId"
-    />
+    <vs-input type="password" class="inputx" label="User ID" v-model="userId"/>
     <vs-row id="content-header">
       <vs-col>
         <vs-button class="addButton" color="success" size="large" @click="addTask()">Nueva Tarea</vs-button>
@@ -24,7 +18,7 @@
         <vs-input
           ref="taskDescription"
           class="inputx"
-          placeholder="Descripción de la tarea"
+          label-placeholder="Descripción de la tarea"
           v-model="taskDescription"
         />
         <vs-select label="Sistema" v-model="projectId" autocomplete>
