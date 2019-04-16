@@ -284,7 +284,9 @@ const actions = {
   login: (context, user) => {
     return new Promise((resolve, reject) => {
       axios
-        .post(process.env.VUE_APP_APIURL.concat('/users/login'), user)
+        .post(process.env.VUE_APP_APIURL.concat('/users/login'), user, {
+          withCredentials: true,
+        })
         .then(response => {
           if (response.status == 200) {
             resolve(response.data);
