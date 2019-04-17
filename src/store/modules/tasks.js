@@ -131,7 +131,7 @@ const actions = {
   getTasks: ({ commit, state }) => {
     return new Promise((resolve, reject) => {
       axios
-        .get(process.env.VUE_APP_APIURL + `/users/${state.userId}/tasks`)
+        .get(`/users/${state.userId}/tasks`)
         .then(response => {
           if (response.status == 200) {
             commit('updateTasks', response.data);
@@ -149,7 +149,7 @@ const actions = {
   pauseTask: ({ commit }, taskId) => {
     return new Promise((resolve, reject) => {
       axios
-        .patch(process.env.VUE_APP_APIURL.concat('/tasks'), {
+        .patch('/tasks', {
           taskId: taskId,
           state: 'paused',
         })
@@ -174,7 +174,7 @@ const actions = {
   resumeOrStartTask: ({ commit }, taskId) => {
     return new Promise((resolve, reject) => {
       axios
-        .patch(process.env.VUE_APP_APIURL.concat('/tasks'), {
+        .patch('/tasks', {
           taskId: taskId,
           state: 'running',
         })
@@ -199,7 +199,7 @@ const actions = {
   finishTask: ({ commit }, taskId) => {
     return new Promise((resolve, reject) => {
       axios
-        .patch(process.env.VUE_APP_APIURL.concat('/tasks'), {
+        .patch('/tasks', {
           taskId: taskId,
           state: 'finished',
         })
@@ -225,7 +225,7 @@ const actions = {
   addTask: ({ commit, rootGetters }, task) => {
     return new Promise((resolve, reject) => {
       axios
-        .post(process.env.VUE_APP_APIURL.concat('/tasks'), task)
+        .post('/tasks', task)
         .then(response => {
           if (response.status == '201') {
             commit(
@@ -284,7 +284,7 @@ const actions = {
   login: (context, user) => {
     return new Promise((resolve, reject) => {
       axios
-        .post(process.env.VUE_APP_APIURL.concat('/users/login'), user)
+        .post('/users/login', user)
         .then(response => {
           if (response.status == 200) {
             resolve(response.data);
@@ -301,10 +301,7 @@ const actions = {
   getReportTasks: ({ commit, state }, range) => {
     return new Promise((resolve, reject) => {
       axios
-        .post(
-          process.env.VUE_APP_APIURL + `/users/${state.userId}/report`,
-          range
-        )
+        .post(`/users/${state.userId}/report`, range)
         .then(response => {
           if (response.status == 200) {
             commit('updateReportTasks', response.data);
