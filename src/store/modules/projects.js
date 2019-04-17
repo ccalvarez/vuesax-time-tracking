@@ -23,11 +23,7 @@ const actions = {
   getProjects: ({ commit, rootGetters }) => {
     return new Promise((resolve, reject) => {
       axios
-        .get(
-          process.env.VUE_APP_APIURL.concat(
-            `/users/${rootGetters.userId}/projects`
-          )
-        )
+        .get(`/users/${rootGetters.userId}/projects`)
         .then(response => {
           if (response.status == 200) {
             commit('updateProjects', response.data);
@@ -44,7 +40,7 @@ const actions = {
   addProject: ({ commit }, project) => {
     return new Promise((resolve, reject) => {
       axios
-        .post(process.env.VUE_APP_APIURL.concat('/projects'), {
+        .post('/projects', {
           name: project.name,
           userId: project.userId,
         })

@@ -2,12 +2,15 @@ import Vue from 'vue';
 import App from './App.vue';
 import Vuesax from 'vuesax';
 import VueCookie from 'vue-cookie';
+import axios from 'axios';
 
 import { store } from './store';
 import router from './router';
 
 import './assets/css/0.styles.09b05f6a.css';
 import 'material-icons/iconfont/material-icons.css';
+
+axios.defaults.baseURL = process.env.VUE_APP_APIURL;
 
 Vue.use(Vuesax);
 Vue.use(VueCookie);
@@ -19,7 +22,7 @@ new Vue({
   router,
   render: h => h(App),
   beforeCreate() {
-    // TODO: refactorizar, garantizar que la aplicación se cargue hasta que se obtuvieron todos los datos
+    // TODO: refactorizar, garantizar que la aplicaciï¿½n se cargue hasta que se obtuvieron todos los datos
     this.$store
       .dispatch('getTasks')
       .then()
@@ -27,6 +30,6 @@ new Vue({
     this.$store
       .dispatch('getProjects')
       .then()
-      .catch(); // TODO: esperar y actuar según el resultado de la Promise
+      .catch(); // TODO: esperar y actuar segï¿½n el resultado de la Promise
   },
 }).$mount('#app');
