@@ -6,7 +6,11 @@ const state = {
   parsedToken: null,
 };
 
-const getters = {};
+const getters = {
+  userId: state => {
+    return state.userId;
+  },
+};
 
 const mutations = {
   authenticateUser: (state, userData) => {

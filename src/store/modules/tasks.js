@@ -7,9 +7,6 @@ const state = {
 };
 
 const getters = {
-  userId: state => {
-    return state.userId;
-  },
   workInProgress: state => {
     return state.tasks.filter(task => task.state == 'running').length > 0;
   },

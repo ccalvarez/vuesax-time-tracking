@@ -20,10 +20,12 @@ const mutations = {
 };
 
 const actions = {
-  getProjects: ({ commit, rootGetters }) => {
+  getProjects: ({ commit, rootGetters, rootState }) => {
     return new Promise((resolve, reject) => {
       axios
-        .get(`/users/${rootGetters.userId}/projects`)
+        .get(`/users/${rootGetters.userId}/projects`, {
+          headers: { Authorization: 'bearer ' + rootState.encodedToken },
+        })
         .then(response => {
           if (response.status == 200) {
             commit('updateProjects', response.data);
