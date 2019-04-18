@@ -1,13 +1,20 @@
 import axios from 'axios';
 
 const state = {
-  idToken: null,
+  encodedToken: null,
   userId: null,
+  parsedToken: null,
 };
 
 const getters = {};
 
-const mutations = {};
+const mutations = {
+  authenticateUser: (state, userData) => {
+    state.parsedToken = parseJWT(userData.token);
+    state.encodedToken = userData.token;
+    state.userId = state.parsedToken.data.userId;
+  },
+};
 
 const actions = {
   login: ({ commit }, user) => {
@@ -16,6 +23,7 @@ const actions = {
         .post('/users/login', user)
         .then(response => {
           if (response.status == 200) {
+            commit('authenticateUser', response.data);
             resolve(response.data);
           } else {
             reject(response);
@@ -26,6 +34,12 @@ const actions = {
         });
     });
   },
+};
+
+const parseJWT = token => {
+  let base64Url = token.split('.')[1];
+  let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+  return JSON.parse(window.atob(base64));
 };
 
 export default {
