@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const state = {
   tasks: [],
-  userId: process.env.VUE_APP_USERID,
+  // userId: process.env.VUE_APP_USERID,
   report: [],
 };
 
@@ -279,23 +279,6 @@ const actions = {
     dispatch('getProjects')
       .then()
       .catch(); // TODO: esperar y actuar según el resultado de la Promise
-  },
-
-  login: (context, user) => {
-    return new Promise((resolve, reject) => {
-      axios
-        .post('/users/login', user)
-        .then(response => {
-          if (response.status == 200) {
-            resolve(response.data);
-          } else {
-            reject(response);
-          }
-        })
-        .catch(error => {
-          reject(error);
-        });
-    });
   },
 
   getReportTasks: ({ commit, state }, range) => {
