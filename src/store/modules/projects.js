@@ -21,10 +21,11 @@ const mutations = {
 
 const actions = {
   getProjects: ({ commit, rootGetters, rootState }) => {
+    console.log(rootState.auth.encodedToken);
     return new Promise((resolve, reject) => {
       axios
         .get(`/users/${rootGetters.userId}/projects`, {
-          headers: { Authorization: 'bearer ' + rootState.encodedToken },
+          headers: { Authorization: 'Bearer ' + rootState.auth.encodedToken },
         })
         .then(response => {
           if (response.status == 200) {
