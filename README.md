@@ -22,7 +22,10 @@
 ## Important
 
 This application uses environment variables as explained in the Vue CLI 3 [official guide](https://cli.vuejs.org/guide/mode-and-env.html).
-To run the application, copy the `.env` file as `.env.local` and edit the latter to set appropriate values for the environment variables.
+To run the application you have to:
+
+- Copy the `.env.copy` file as `.env.local`
+- Edit the `.env.local` file to set the values for the environment variables
 
 ## Project setup
 ```
