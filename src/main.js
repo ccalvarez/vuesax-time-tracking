@@ -10,6 +10,9 @@ import router from './router';
 import './assets/css/0.styles.09b05f6a.css';
 import 'material-icons/iconfont/material-icons.css';
 
+import LogRocket from 'logrocket';
+LogRocket.init(process.env.VUE_APP_LOGROCKET_PROJECT);
+
 axios.defaults.baseURL = process.env.VUE_APP_APIURL;
 
 Vue.use(Vuesax);
