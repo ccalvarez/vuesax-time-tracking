@@ -2,6 +2,8 @@
 
 > Single-Page Application for logging and reporting daily tasks.
 
+Note: I'm planning to migrate this project to a React PWA application with a Hasura backend, and finish the authentication strategy.  I want also to implement the [monorepo](https://medium.com/hy-vee-engineering/creating-a-monorepo-with-lerna-yarn-workspaces-cf163908965d) approach.
+
 ## Features
 
 - [Vue.js](https://vuejs.org/)
@@ -9,7 +11,7 @@
 - [Vuex](https://vuex.vuejs.org/)
 - [Vue Router](https://router.vuejs.org/)
 - [Vuesax Frontend Vue Components](https://lusaxweb.github.io/vuesax/)
-- [JSON Web Tokens](https://jwt.io/)
+- [JSON Web Tokens](https://jwt.io/) (work in progress)
 
 ## Hosting
 
