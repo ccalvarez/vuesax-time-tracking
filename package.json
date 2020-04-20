@@ -10,7 +10,7 @@
   "dependencies": {
     "@sentry/browser": "^5.15.4",
     "@sentry/integrations": "^5.15.4",
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "material-icons": "^0.2.3",
     "vue": "^2.5.17",
     "vue-cookie": "^1.1.4",
