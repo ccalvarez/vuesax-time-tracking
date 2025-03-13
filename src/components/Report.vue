@@ -7,11 +7,17 @@
       <datepicker placeholder="Fecha de fin" v-model="end"></datepicker>
     </div>
     <div>
-      <vs-button id="generateButton" color="success" size="large" @click="generateReport()">Generar</vs-button>
+      <vs-button
+        id="generateButton"
+        color="success"
+        size="large"
+        @click="generateReport()"
+        >Generar</vs-button
+      >
     </div>
-    <br>
-    <br>
-    <br>
+    <br />
+    <br />
+    <br />
     <span>
       <div>
         <table
@@ -42,9 +48,11 @@
    text-align:center;line-height:normal"
                 >
                   <b style="mso-bidi-font-weight:normal">
-                    <span lang="ES-CR" style="font-size:9.0pt;mso-bidi-font-family:Calibri">
-                      FECHA
-                      DE EJECUCIÓN
+                    <span
+                      lang="ES-CR"
+                      style="font-size:9.0pt;mso-bidi-font-family:Calibri"
+                    >
+                      FECHA DE EJECUCIÓN
                       <sup>1</sup>
                     </span>
                   </b>
@@ -68,7 +76,8 @@
                     <span
                       lang="ES-CR"
                       style="font-size:9.0pt;mso-bidi-font-family:Calibri"
-                    >ACTIVIDAD</span>
+                      >ACTIVIDAD</span
+                    >
                   </b>
                 </p>
                 <p
@@ -78,7 +87,10 @@
    text-align:center;line-height:normal"
                 >
                   <b style="mso-bidi-font-weight:normal">
-                    <span lang="ES-CR" style="font-size:9.0pt;mso-bidi-font-family:Calibri">
+                    <span
+                      lang="ES-CR"
+                      style="font-size:9.0pt;mso-bidi-font-family:Calibri"
+                    >
                       REALIZADA
                       <sup>2</sup>
                     </span>
@@ -100,7 +112,10 @@
    text-align:center;line-height:normal"
                 >
                   <b style="mso-bidi-font-weight:normal">
-                    <span lang="ES-CR" style="font-size:9.0pt;mso-bidi-font-family:Calibri">
+                    <span
+                      lang="ES-CR"
+                      style="font-size:9.0pt;mso-bidi-font-family:Calibri"
+                    >
                       DURACIÓN
                       <sup>3</sup>
                     </span>
@@ -122,9 +137,11 @@
    text-align:center;line-height:normal"
                 >
                   <b style="mso-bidi-font-weight:normal">
-                    <span lang="ES-CR" style="font-size:9.0pt;mso-bidi-font-family:Calibri">
-                      GRADO
-                      DE AVANCE
+                    <span
+                      lang="ES-CR"
+                      style="font-size:9.0pt;mso-bidi-font-family:Calibri"
+                    >
+                      GRADO DE AVANCE
                       <sup>4</sup>
                     </span>
                   </b>
@@ -145,7 +162,10 @@
    text-align:center;line-height:normal"
                 >
                   <b style="mso-bidi-font-weight:normal">
-                    <span lang="ES-CR" style="font-size:9.0pt;mso-bidi-font-family:Calibri">
+                    <span
+                      lang="ES-CR"
+                      style="font-size:9.0pt;mso-bidi-font-family:Calibri"
+                    >
                       SISTEMA
                       <sup>5</sup>
                     </span>
@@ -167,7 +187,10 @@
    text-align:center;line-height:normal"
                 >
                   <b style="mso-bidi-font-weight:normal">
-                    <span lang="ES-CR" style="font-size:9.0pt;mso-bidi-font-family:Calibri">
+                    <span
+                      lang="ES-CR"
+                      style="font-size:9.0pt;mso-bidi-font-family:Calibri"
+                    >
                       OBSERVACIONES
                       <sup>6</sup>
                     </span>
@@ -176,114 +199,124 @@
               </td>
             </tr>
           </thead>
-          <tr :key="index" v-for="(task, index) in reportTasks">
-            <td
-              width="76"
-              style="width:57.3pt; border:solid windowtext 1.0pt;
-  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt;height:11.65pt'"
+          <template v-for="(tasks, date) in groupedTasks">
+            <tr
+              v-for="(task, taskIndex) in tasks"
+              :key="`${date}-${task.id || taskIndex}`"
             >
-              <p
-                class="MsoNormal"
-                style="margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal"
+              <td
+                v-if="taskIndex === 0"
+                :rowspan="tasks.length"
+                width="76"
+                style="width:57.3pt; border:solid windowtext 1.0pt;
+                border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+                padding:0cm 5.4pt 0cm 5.4pt;height:11.65pt"
               >
-                <span lang="ES-CR" style="font-size:9.0pt;mso-bidi-font-size:11.0pt">{{ task.date }}</span>
-              </p>
-            </td>
-            <td
-              width="151"
-              valign="top"
-              style="width:112.85pt;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
-  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt;height:11.65pt"
-            >
-              <p
-                class="MsoNormal"
-                style="margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal"
+                <p
+                  class="MsoNormal"
+                  style="margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal"
+                >
+                  <span
+                    lang="ES-CR"
+                    style="font-size:9.0pt;mso-bidi-font-size:11.0pt"
+                    >{{ date }}</span
+                  >
+                </p>
+              </td>
+              <td
+                width="151"
+                valign="top"
+                style="width:112.85pt;border-top:none;border-left:none;
+                border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+                mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+                mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt;height:11.65pt"
               >
-                <span
-                  lang="ES-CR"
-                  style="font-size:9.0pt;mso-bidi-font-family:Calibri"
-                >{{ task.description }}</span>
-              </p>
-            </td>
-            <td
-              width="76"
-              style="width:2.0cm;border:solid windowtext 1.0pt;
-  border-top:none;border-left:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt;height:11.65pt'"
-            >
-              <p
-                class="MsoNormal"
-                align="center"
-                style="margin-bottom:0cm;margin-bottom:.0001pt;
-  text-align:center;line-height:normal"
+                <p
+                  class="MsoNormal"
+                  style="margin-bottom:0cm;margin-bottom:.0001pt;line-height:normal"
+                >
+                  <span
+                    lang="ES-CR"
+                    style="font-size:9.0pt;mso-bidi-font-family:Calibri"
+                    >{{ task.description }}</span
+                  >
+                </p>
+              </td>
+              <td
+                width="76"
+                style="width:2.0cm;border:solid windowtext 1.0pt;border-top:none;
+                border-left:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+                padding:0cm 5.4pt 0cm 5.4pt;height:11.65pt"
               >
-                <span
-                  span
-                  lang="ES-CR"
-                  style="font-size:9.0pt;
-  mso-bidi-font-family:Calibri"
-                >{{ task.intervalDuration }}</span>
-              </p>
-            </td>
-            <td
-              width="85"
-              style="width:57.3pt; border:solid windowtext 1.0pt;
-  border-top:none;border-left:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt;height:11.65pt'"
-            >
-              <p
-                class="MsoNormal"
-                align="center"
-                style="margin-bottom:0cm;margin-bottom:.0001pt;
-  text-align:center;line-height:normal"
+                <p
+                  class="MsoNormal"
+                  align="center"
+                  style="margin-bottom:0cm;margin-bottom:.0001pt;text-align:center;line-height:normal"
+                >
+                  <span
+                    lang="ES-CR"
+                    style="font-size:9.0pt;mso-bidi-font-family:Calibri"
+                    >{{ task.intervalDuration }}</span
+                  >
+                </p>
+              </td>
+              <td
+                width="85"
+                style="width:57.3pt;border:solid windowtext 1.0pt;border-top:none;
+                border-left:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+                padding:0cm 5.4pt 0cm 5.4pt;height:11.65pt"
               >
-                <span
-                  lang="ES-CR"
-                  style="font-size:9.0pt;
-  mso-bidi-font-family:Calibri"
-                >{{ task.intervalAccumulatedPercentage }}</span>
-              </p>
-            </td>
-            <td
-              width="132"
-              style="width:99.2pt;border-top:none;border-left:none;
-  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
-  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt;height:11.65pt"
-            >
-              <p
-                class="MsoNormal"
-                align="center"
-                style="margin-bottom:0cm;margin-bottom:.0001pt;
-  text-align:center;line-height:normal"
+                <p
+                  class="MsoNormal"
+                  align="center"
+                  style="margin-bottom:0cm;margin-bottom:.0001pt;text-align:center;line-height:normal"
+                >
+                  <span
+                    lang="ES-CR"
+                    style="font-size:9.0pt;mso-bidi-font-family:Calibri"
+                    >{{ task.intervalAccumulatedPercentage }}</span
+                  >
+                </p>
+              </td>
+              <td
+                width="132"
+                style="width:99.2pt;border-top:none;border-left:none;
+                border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+                mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+                mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt;height:11.65pt"
               >
-                <span
-                  lang="ES-CR"
-                  style="font-size:9.0pt;
-  mso-bidi-font-family:Calibri"
-                >{{ task.project }}</span>
-              </p>
-            </td>
-            <td
-              width="170"
-              style="width:127.6pt;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
-  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt;height:11.65pt"
-            >
-              <p
-                class="MsoNormal"
-                align="center"
-                style="margin-bottom:0cm;margin-bottom:.0001pt;
-  text-align:center;line-height:normal"
+                <p
+                  class="MsoNormal"
+                  align="center"
+                  style="margin-bottom:0cm;margin-bottom:.0001pt;text-align:center;line-height:normal"
+                >
+                  <span
+                    lang="ES-CR"
+                    style="font-size:9.0pt;mso-bidi-font-family:Calibri"
+                    >{{ task.project }}</span
+                  >
+                </p>
+              </td>
+              <td
+                width="170"
+                style="width:127.6pt;border-top:none;border-left:none;
+                border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+                mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+                mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt;height:11.65pt"
               >
-                <span lang="ES-CR" style="font-size:9.0pt;
-  mso-bidi-font-family:Calibri"></span>
-              </p>
-            </td>
-          </tr>
+                <p
+                  class="MsoNormal"
+                  align="center"
+                  style="margin-bottom:0cm;margin-bottom:.0001pt;text-align:center;line-height:normal"
+                >
+                  <span
+                    lang="ES-CR"
+                    style="font-size:9.0pt;mso-bidi-font-family:Calibri"
+                  ></span>
+                </p>
+              </td>
+            </tr>
+          </template>
         </table>
       </div>
     </span>
@@ -305,6 +338,18 @@ export default {
   },
   computed: {
     ...mapGetters(['reportTasks']),
+    groupedTasks() {
+      if (!this.reportTasks) return {};
+
+      return this.reportTasks.reduce((groups, task) => {
+        const date = task.date;
+        if (!groups[date]) {
+          groups[date] = [];
+        }
+        groups[date].push(task);
+        return groups;
+      }, {});
+    },
   },
   methods: {
     generateReport() {
@@ -333,4 +378,3 @@ div {
   margin: 15px 20px 10px 20px;
 }
 </style>
-
